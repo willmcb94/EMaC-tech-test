@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "node listen.js"
+    "dev": "npx nodemon listen.js"
   },
   "repository": {
     "type": "git",
