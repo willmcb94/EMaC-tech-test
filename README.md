@@ -14,7 +14,7 @@ Write a GET endpoint that responds with a single recipe.
 
 ## 3 - POST `/api/recipes`
 
-Write a POST endpoint that adds a recipe to the data.
+Write a POST endpoint that adds a recipe to the data. The recipe ID should be unique and calculated.
 
 ## 4 - POST `/api/plan`
 
