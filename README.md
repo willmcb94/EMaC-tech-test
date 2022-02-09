@@ -30,10 +30,10 @@ The post request body should match the following schema:
 {
   "days": [
     ["recipe-1", "recipe-2", "recipe-3", "recipe-4", "recipe-5", "recipe-6"],
-    ["recipe-1"],
-    ["recipe-1", "recipe-2", "recipe-3", "recipe-6"],
+    ["recipe-8"],
+    ["recipe-1", "recipe-9", "recipe-93", "recipe-68"],
     [],
-    ["recipe-1", "recipe-2", "recipe-3", "recipe-4", "recipe-5", "recipe-6"]
+    ["recipe-11", "recipe-2", "recipe-23", "recipe-41", "recipe-5", "recipe-62"]
   ]
 }
 ```
