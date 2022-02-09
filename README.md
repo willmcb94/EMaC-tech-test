@@ -8,11 +8,11 @@ Write a GET endpoint that responds with a list of all recipes.
 
 Include a query (`?exclude_ingredients=apples,bananas,carrots`) to exclude recipes that contain specific ingredients.
 
-# 2 - GET `/api/recipes/:id`
+## 2 - GET `/api/recipes/:id`
 
 Write a GET endpoint that responds with a single recipe.
 
-# 3 - POST `/api/recipes`
+## 3 - POST `/api/recipes`
 
 Write a POST endpoint that adds a recipe to the data.
 
