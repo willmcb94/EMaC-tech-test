@@ -6,8 +6,6 @@ _Please spend a maximum of 3 hours on these tasks. We don't want to take up load
 
 **Please use `data.json` as your DB. Any modification should be programmatic**
 
-Please
-
 _TIP_ there are some tips at the bottom of this document.
 
 ## 1 - GET `/api/recipes`
