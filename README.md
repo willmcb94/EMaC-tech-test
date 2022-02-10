@@ -10,13 +10,13 @@ Write a GET endpoint that responds with a list of all recipes.
 
 Include a query (`?exclude_ingredients=apples,bananas,carrots`) to exclude recipes that contain specific ingredients.
 
-# 2 - GET `/api/recipes/:id`
+## 2 - GET `/api/recipes/:id`
 
 Write a GET endpoint that responds with a single recipe.
 
-# 3 - POST `/api/recipes`
+## 3 - POST `/api/recipes`
 
-Write a POST endpoint that adds a recipe to the data.
+Write a POST endpoint that adds a recipe to the data. The recipe ID should be unique and calculated.
 
 ## 4 - POST `/api/plan`
 
@@ -32,10 +32,10 @@ The post request body should match the following schema:
 {
   "days": [
     ["recipe-1", "recipe-2", "recipe-3", "recipe-4", "recipe-5", "recipe-6"],
-    ["recipe-1"],
-    ["recipe-1", "recipe-2", "recipe-3", "recipe-6"],
+    ["recipe-8"],
+    ["recipe-1", "recipe-9", "recipe-93", "recipe-68"],
     [],
-    ["recipe-1", "recipe-2", "recipe-3", "recipe-4", "recipe-5", "recipe-6"]
+    ["recipe-11", "recipe-2", "recipe-23", "recipe-41", "recipe-5", "recipe-62"]
   ]
 }
 ```
