@@ -2,6 +2,8 @@
 
 Lizzo’s Juicy Juice Bar, a trendy Northern Quarter juice/smoothie cafe, is only a few days from launching. Lizzo has lots of raw data to populate her digital menus, and she needs a way to build custom menu plans from this raw menu plan data.
 
+_Please spend a maximum of 3 hours on these tasks. We don't want to take up loads of your time, and we're much interested in your process that finishing anything._
+
 **Please use `data.json` as your DB. Any modification should be programmatic**
 
 Please
