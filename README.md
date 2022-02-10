@@ -2,6 +2,8 @@
 
 Lizzo’s Juicy Juice Bar, a trendy Northern Quarter juice/smoothie cafe, is only a few days from launching. Lizzo has lots of raw data to populate her digital menus, and she needs a way to build custom menu plans from this raw menu plan data.
 
+_TIP_ there are some tips at the bottom of this document.
+
 ## 1 - GET `/api/recipes`
 
 Write a GET endpoint that responds with a list of all recipes.
@@ -61,3 +63,5 @@ Please leave comments justifying your choices for the response.
 - Some recipes - i.e. recipe-86, have duplicated ingredients with different weights. Is there a nicer way to handle this?
 
 - Feel free to modify the `data.json` if you wish. If you choose to do this, do it programmatically, and we'd like to see your working out.
+
+- You can use the `data.json` as your DB.
