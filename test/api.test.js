@@ -68,33 +68,47 @@ describe('GET /api/recipes', () => {
 });
 
 describe('GET /api/recipes/:id', () => {
-  test('200 OK - Should return a recipe array with just 1 recipe in it', () => {
-    return supertest(server)
-      .get('/api/recipes/36')
-      .expect(200)
-      .then((response) => {
-        expect(Array.isArray(response._body.recipe)).toBe(true);
-        expect(response._body.recipe.length).toBe(1);
-      });
+  describe('HAPPY path', () => {
+    test('200 OK - Should return a recipe array with just 1 recipe in it', () => {
+      return supertest(server)
+        .get('/api/recipes/36')
+        .expect(200)
+        .then((response) => {
+          expect(Array.isArray(response._body.recipe)).toBe(true);
+          expect(response._body.recipe.length).toBe(1);
+        });
+    });
+    test('200 OK - Returned array should have the correct recipe object', () => {
+      return supertest(server)
+        .get('/api/recipes/36')
+        .expect(200)
+        .then((response) => {
+          expect(response._body.recipe[0]).toEqual(
+            expect.objectContaining({
+              id: 'recipe-36',
+              imageUrl: 'http://www.images.com/21',
+              ingredients: expect.arrayContaining([
+                expect.objectContaining({
+                  name: expect.any(String),
+                  grams: expect.any(Number),
+                }),
+              ]),
+            })
+          );
+        });
+    });
   });
-  test('200 OK - Returned array should have the correct recipe object', () => {
-    return supertest(server)
-      .get('/api/recipes/36')
-      .expect(200)
-      .then((response) => {
-        expect(response._body.recipe[0]).toEqual(
-          expect.objectContaining({
-            id: 'recipe-36',
-            imageUrl: 'http://www.images.com/21',
-            ingredients: expect.arrayContaining([
-              expect.objectContaining({
-                name: expect.any(String),
-                grams: expect.any(Number),
-              }),
-            ]),
-          })
-        );
-      });
+
+  describe('SAD path', () => {
+    test('should respond 404 if path valid but not found', () => {
+      return supertest(server)
+        .get('/api/recipes/100000000')
+        .expect(404)
+        .then((response) => {
+          const message = { msg: `No recipe with ID 100000000 found` };
+          expect(response.body).toEqual(message);
+        });
+    });
   });
 });
 
@@ -114,6 +128,18 @@ describe('POST /api/recipes', () => {
       .expect(201)
       .then((response) => {
         expect(typeof response._body.newRecipeId).toBe('string');
+      });
+  });
+});
+
+describe('PATH NOT FOUND for all -  /api/*', () => {
+  test('should respond 404 if path not found', () => {
+    return supertest(server)
+      .get('/api/not-a-route')
+      .expect(404)
+      .then((response) => {
+        const message = { msg: 'path not found' };
+        expect(response.body).toEqual(message);
       });
   });
 });
