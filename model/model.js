@@ -28,3 +28,16 @@ exports.fetchRecipeById = async (id) => {
   console.log(recipe, '<<<<<<<');
   return recipe;
 };
+
+exports.addRecipe = async (newRecipe) => {
+  const recipesData = await readFile('./data/data.json', 'utf8');
+  const recipes = JSON.parse(recipesData);
+
+  newRecipe.id = `recipe-${recipes.length}`;
+
+  recipes.push(newRecipe);
+
+  writeFile('./data/data.json', JSON.stringify(recipes));
+
+  return newRecipe.id;
+};
