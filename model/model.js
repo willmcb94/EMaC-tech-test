@@ -17,3 +17,14 @@ exports.fetchRecipes = async (query) => {
     return filterRecipesByIngredients(recipes, query.exclude_ingredients);
   }
 };
+
+exports.fetchRecipeById = async (id) => {
+  const recipesData = await readFile('./data/data.json', 'utf8');
+  const recipes = JSON.parse(recipesData);
+
+  const recipe = recipes.filter((recipe) => {
+    return recipe.id === `recipe-${id}`;
+  });
+  console.log(recipe, '<<<<<<<');
+  return recipe;
+};
