@@ -97,3 +97,23 @@ describe('GET /api/recipes/:id', () => {
       });
   });
 });
+
+describe('POST /api/recipes', () => {
+  const newRecipe = {
+    imageUrl: 'http://www.images.com/18',
+    instructions: 'Put in the blender and blend for 50 seconds',
+    ingredients: [
+      { name: 'cherry', grams: 50 },
+      { name: 'apple', grams: 30 },
+    ],
+  };
+  test('201 CREATED - should respond with the new recipe id', () => {
+    return supertest(server)
+      .post('/api/recipes')
+      .send(newRecipe)
+      .expect(201)
+      .then((response) => {
+        expect(typeof response._body.newRecipeId).toBe('string');
+      });
+  });
+});
