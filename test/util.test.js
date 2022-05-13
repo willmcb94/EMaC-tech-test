@@ -1,4 +1,7 @@
-const { removeDuplicateIngredients } = require('../utils/utils.js');
+const {
+  removeDuplicateIngredients,
+  filterRecipesByIngredients,
+} = require('../utils/utils.js');
 
 describe('removeDuplicateIngredients', () => {
   const recipes = [
@@ -106,5 +109,163 @@ describe('removeDuplicateIngredients', () => {
       },
     ];
     expect(removeDuplicateIngredients(recipes)).toEqual(removeDuplicates);
+  });
+});
+
+describe('filterRecipesByIngredients', () => {
+  const queryOne = 'sugar';
+  const queryTwo = 'sugar,flax';
+  const recipes = [
+    {
+      id: 'recipe-59',
+      imageUrl: 'http://www.images.com/18',
+      instructions:
+        '60 seconds on the highest setting your blender has, or until a smooth paste has formed',
+      ingredients: [
+        { name: 'demerara sugar', grams: 25 },
+        { name: 'flax', grams: 113 },
+      ],
+    },
+    {
+      id: 'recipe-31',
+      imageUrl: 'http://www.images.com/21',
+      instructions: 'spin it, twist it, pull it, flick it... bop it!',
+      ingredients: [
+        { name: 'strawberries', grams: 187 },
+        { name: 'kale', grams: 86 },
+      ],
+    },
+    {
+      id: 'recipe-77',
+      imageUrl: 'http://www.images.com/25',
+      instructions: 'blend with oat milk and ice, sprinkle with salt',
+      ingredients: [
+        { name: 'coconut', grams: 71 },
+        { name: 'lime', grams: 153 },
+        { name: 'oat milk', grams: 31 },
+      ],
+    },
+    {
+      id: 'recipe-65',
+      imageUrl: 'http://www.images.com/5',
+      instructions: 'spin it, twist it, pull it, flick it... bop it!',
+      ingredients: [
+        { name: 'double cream', grams: 144 },
+        { name: 'sugar', grams: 153 },
+      ],
+    },
+  ];
+  test('should return a new array', () => {
+    expect(Array.isArray(filterRecipesByIngredients(recipes, queryOne))).toBe(
+      true
+    );
+    expect(filterRecipesByIngredients(recipes, queryOne)).not.toBe(recipes);
+  });
+  test('should return empty array if empty array passed', () => {
+    expect(filterRecipesByIngredients([], queryOne)).toEqual([]);
+  });
+  test('orginal input should not be mutated', () => {
+    const recipesCopy = [
+      {
+        id: 'recipe-59',
+        imageUrl: 'http://www.images.com/18',
+        instructions:
+          '60 seconds on the highest setting your blender has, or until a smooth paste has formed',
+        ingredients: [
+          { name: 'demerara sugar', grams: 25 },
+          { name: 'flax', grams: 113 },
+        ],
+      },
+      {
+        id: 'recipe-31',
+        imageUrl: 'http://www.images.com/21',
+        instructions: 'spin it, twist it, pull it, flick it... bop it!',
+        ingredients: [
+          { name: 'strawberries', grams: 187 },
+          { name: 'kale', grams: 86 },
+        ],
+      },
+      {
+        id: 'recipe-77',
+        imageUrl: 'http://www.images.com/25',
+        instructions: 'blend with oat milk and ice, sprinkle with salt',
+        ingredients: [
+          { name: 'coconut', grams: 71 },
+          { name: 'lime', grams: 153 },
+          { name: 'oat milk', grams: 31 },
+        ],
+      },
+      {
+        id: 'recipe-65',
+        imageUrl: 'http://www.images.com/5',
+        instructions: 'spin it, twist it, pull it, flick it... bop it!',
+        ingredients: [
+          { name: 'double cream', grams: 144 },
+          { name: 'sugar', grams: 153 },
+        ],
+      },
+    ];
+    filterRecipesByIngredients(recipes, queryOne);
+    expect(recipes).toEqual(recipesCopy);
+  });
+  test('should exclude any recipes which include items from the query', () => {
+    const filteredRecipesOne = [
+      {
+        id: 'recipe-59',
+        imageUrl: 'http://www.images.com/18',
+        instructions:
+          '60 seconds on the highest setting your blender has, or until a smooth paste has formed',
+        ingredients: [
+          { name: 'demerara sugar', grams: 25 },
+          { name: 'flax', grams: 113 },
+        ],
+      },
+      {
+        id: 'recipe-31',
+        imageUrl: 'http://www.images.com/21',
+        instructions: 'spin it, twist it, pull it, flick it... bop it!',
+        ingredients: [
+          { name: 'strawberries', grams: 187 },
+          { name: 'kale', grams: 86 },
+        ],
+      },
+      {
+        id: 'recipe-77',
+        imageUrl: 'http://www.images.com/25',
+        instructions: 'blend with oat milk and ice, sprinkle with salt',
+        ingredients: [
+          { name: 'coconut', grams: 71 },
+          { name: 'lime', grams: 153 },
+          { name: 'oat milk', grams: 31 },
+        ],
+      },
+    ];
+    const filteredRecipesTwo = [
+      {
+        id: 'recipe-31',
+        imageUrl: 'http://www.images.com/21',
+        instructions: 'spin it, twist it, pull it, flick it... bop it!',
+        ingredients: [
+          { name: 'strawberries', grams: 187 },
+          { name: 'kale', grams: 86 },
+        ],
+      },
+      {
+        id: 'recipe-77',
+        imageUrl: 'http://www.images.com/25',
+        instructions: 'blend with oat milk and ice, sprinkle with salt',
+        ingredients: [
+          { name: 'coconut', grams: 71 },
+          { name: 'lime', grams: 153 },
+          { name: 'oat milk', grams: 31 },
+        ],
+      },
+    ];
+    expect(filterRecipesByIngredients(recipes, queryOne)).toEqual(
+      filteredRecipesOne
+    );
+    expect(filterRecipesByIngredients(recipes, queryTwo)).toEqual(
+      filteredRecipesTwo
+    );
   });
 });
