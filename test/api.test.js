@@ -43,4 +43,29 @@ describe('GET /api/recipes', () => {
         });
       });
   });
+  test('200 OK - If query given, shouldnt include any recipes with ingredients from query', () => {
+    return supertest(server)
+      .get('/api/recipes?exclude_ingredients=flax,kale')
+      .expect(200)
+      .then((response) => {
+        response._body.recipes.forEach((recipe) => {
+          recipe.ingredients.forEach((ingredient) => {
+            expect(ingredient.name).not.toBe('flax');
+            expect(ingredient.name).not.toBe('kale');
+          });
+        });
+      });
+  });
+  test('200 OK - If query ingredient has a space in it, should still remove any recipes which its in', () => {
+    return supertest(server)
+      .get('/api/recipes?exclude_ingredients=apple juice')
+      .expect(200)
+      .then((response) => {
+        response._body.recipes.forEach((recipe) => {
+          recipe.ingredients.forEach((ingredient) => {
+            expect(ingredient.name).not.toBe('apple juice');
+          });
+        });
+      });
+  });
 });
