@@ -9,9 +9,6 @@ test('/api', async () => {
 });
 
 describe('GET /api/recipes', () => {
-  test('200 OK - should return status 200 OK if succesful', () => {
-    return supertest(server).get('/api/recipes').expect(200);
-  });
   test('200 OK - Should return an array of recipes', () => {
     return supertest(server)
       .get('/api/recipes')
@@ -66,6 +63,37 @@ describe('GET /api/recipes', () => {
             expect(ingredient.name).not.toBe('apple juice');
           });
         });
+      });
+  });
+});
+
+describe('GET /api/recipes/:id', () => {
+  test('200 OK - Should return a recipe array with just 1 recipe in it', () => {
+    return supertest(server)
+      .get('/api/recipes/36')
+      .expect(200)
+      .then((response) => {
+        expect(Array.isArray(response._body.recipe)).toBe(true);
+        expect(response._body.recipe.length).toBe(1);
+      });
+  });
+  test('200 OK - Returned array should have the correct recipe object', () => {
+    return supertest(server)
+      .get('/api/recipes/36')
+      .expect(200)
+      .then((response) => {
+        expect(response._body.recipe[0]).toEqual(
+          expect.objectContaining({
+            id: 'recipe-36',
+            imageUrl: 'http://www.images.com/21',
+            ingredients: expect.arrayContaining([
+              expect.objectContaining({
+                name: expect.any(String),
+                grams: expect.any(Number),
+              }),
+            ]),
+          })
+        );
       });
   });
 });
