@@ -5,10 +5,8 @@ const {
 } = require('../utils/utils');
 
 exports.fetchRecipes = async (query) => {
-  console.log(query);
   const recipesData = await readFile('./data/data.json', 'utf8');
   const unFilteredRecipes = JSON.parse(recipesData);
-
   const recipes = removeDuplicateIngredients(unFilteredRecipes);
 
   if (Object.keys(query).length === 0) {
@@ -21,12 +19,18 @@ exports.fetchRecipes = async (query) => {
 exports.fetchRecipeById = async (id) => {
   const recipesData = await readFile('./data/data.json', 'utf8');
   const recipes = JSON.parse(recipesData);
-
   const recipe = recipes.filter((recipe) => {
     return recipe.id === `recipe-${id}`;
   });
-  console.log(recipe, '<<<<<<<');
-  return recipe;
+
+  if (recipe.length > 0) {
+    return recipe;
+  } else {
+    return Promise.reject({
+      status: 404,
+      msg: `No recipe with ID ${id} found`,
+    });
+  }
 };
 
 exports.addRecipe = async (newRecipe) => {
