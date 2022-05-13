@@ -1,8 +1,10 @@
 const { readFile, writeFile } = require('fs/promises');
+const { removeDuplicateIngredients } = require('../utils/utils');
 exports.fetchRecipes = async () => {
-  console.log('test2');
   const recipesData = await readFile('./data/data.json', 'utf8');
-  const recipes = JSON.parse(recipesData);
+  const unfilteredRecipes = JSON.parse(recipesData);
+
+  const recipes = removeDuplicateIngredients(unfilteredRecipes);
 
   return recipes;
 };
